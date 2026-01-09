@@ -1,0 +1,13 @@
+siteName: "TallyUpTutors"
+tagline: "focus and make it count"
+whatsapp: "https://wa.me/27718224498"
+formspree: "https://formspree.io/f/PLACEHOLDER"
+navLinks:
+  - label: "About"
+    url: "#about"
+  - label: "Subjects"
+    url: "#subjects"
+  - label: "Pricing"
+    url: "#pricing"
+  - label: "Contact"
+    url: "#contact"

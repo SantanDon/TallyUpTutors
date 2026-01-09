@@ -1,0 +1,1576 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// Get all home content
+const heroEntries = await getCollection('home', ({ id }) => id === 'hero.md');
+const hero = heroEntries[0]?.data || {};
+
+const aboutEntries = await getCollection('home', ({ id }) => id === 'about.md');
+const about = aboutEntries[0]?.data || {};
+
+const subjectsEntries = await getCollection('home', ({ id }) => id === 'subjects.md');
+const subjectsData = subjectsEntries[0]?.data || {};
+
+const pricingEntries = await getCollection('home', ({ id }) => id === 'pricing.md');
+const pricing = pricingEntries[0]?.data || {};
+
+const contactEntries = await getCollection('home', ({ id }) => id === 'contact.md');
+const contact = contactEntries[0]?.data || {};
+
+const infoEntries = await getCollection('home', ({ id }) => id === 'info.md');
+const info = infoEntries[0]?.data || {};
+
+const footerEntries = await getCollection('home', ({ id }) => id === 'footer.md');
+const footer = footerEntries[0]?.data || {};
+
+const enrolmentEntries = await getCollection('home', ({ id }) => id === 'enrolment.md');
+const enrolment = enrolmentEntries[0]?.data || {};
+
+const settingsEntries = await getCollection('settings', ({ id }) => id === 'site.yaml');
+const settings = settingsEntries[0]?.data || {};
+---
+
+<Layout title="TallyUpTutors | Mathematics, Science & Accounting Tuition">
+	<main>
+		<!-- AMBER GLOW BACKGROUND -->
+		<div class="bg-amber-glow"></div>
+
+		<!-- HEADER -->
+		<header class="site-header">
+			<div class="container">
+				<a href="#" class="logo">
+					<span class="logo-main">{settings.siteName || 'TALLYUP'}</span>
+					<span class="logo-sub">TUTORS</span>
+				</a>
+				<nav class="main-nav">
+					{settings.navLinks?.map((link) => (
+						<a href={link.url}>{link.label}</a>
+					)) || (
+						<>
+							<a href="#about">About</a>
+							<a href="#subjects">Subjects</a>
+							<a href="#pricing">Pricing</a>
+							<a href="#contact">Contact</a>
+						</>
+					)}
+				</nav>
+			</div>
+		</header>
+
+		<!-- HERO -->
+		<section id="hero" class="hero">
+			<div class="container">
+				<div class="hero-content">
+					<div class="hero-badge">
+						<span class="badge-dot"></span>
+						{hero.freeTrialBadge || 'Free Trial Lessons Available'}
+					</div>
+					<h1 class="hero-title">
+						<span class="title-animate">
+							{(hero.heroTitle || 'TALLYUP TUTORS').split('').map((char, i) => (
+								<span class="title-char" style={`--delay: ${i * 50}ms`}>{char}</span>
+							))}
+						</span>
+					</h1>
+					<p class="hero-subtitle">{hero.heroSubtitle || 'Expert Tuition in Mathematics, Science & Accounting'}</p>
+					<p class="hero-description">
+						{hero.heroDescription || 'Tally Up is a dynamic tuition centre dedicated to enhancing academic performance. We provide personalised, high-quality instruction tailored to each student\'s learning style.'}
+					</p>
+					<div class="hero-actions">
+						<a href="#contact" class="btn btn-accent">
+							<span>Book Free Trial</span>
+							<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<line x1="5" y1="12" x2="19" y2="12"></line>
+								<polyline points="12 5 19 12 12 19"></polyline>
+							</svg>
+						</a>
+						<a href={settings.whatsapp || "https://wa.me/27718224498"} class="btn btn-whatsapp">
+							<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.067 2.877 1.215 3.076.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+							</svg>
+							<span>WhatsApp Us</span>
+						</a>
+					</div>
+					<div class="hero-stats">
+						{hero.stats?.map((stat) => (
+							<div class="stat">
+								<span class="stat-value">{stat.value}</span>
+								<span class="stat-label">{stat.label}</span>
+							</div>
+						)) || (
+							<>
+								<div class="stat">
+									<span class="stat-value">95%</span>
+									<span class="stat-label">Pass Rate</span>
+								</div>
+								<div class="stat">
+									<span class="stat-value">500+</span>
+									<span class="stat-label">Students</span>
+								</div>
+								<div class="stat">
+									<span class="stat-value">8-12</span>
+									<span class="stat-label">Grades</span>
+								</div>
+							</>
+						)}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ABOUT / WHAT WE OFFER -->
+		<section id="about" class="about">
+			<div class="container">
+				<div class="about-grid">
+					<div class="about-content">
+						<div class="section-badge">Why Choose Us</div>
+						<h2>{about.title || 'What We Offer'}</h2>
+						<p class="about-intro">{about.intro || 'Expert tuition in a friendly, focused environment designed to help your child succeed.'}</p>
+						<ul class="offer-list">
+							{about.features?.map((feature) => (
+								<li>
+									<span class="offer-icon">
+										<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+											<polyline points="20 6 9 17 4 12"></polyline>
+										</svg>
+									</span>
+									<span>{feature}</span>
+								</li>
+							)) || (
+								<>
+									<li><span class="offer-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span>Expert tutoring in maths, science & accounting</span></li>
+									<li><span class="offer-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span>Tailored support for Grade 8-12 learners</span></li>
+									<li><span class="offer-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span>Friendly, focused sessions in Boksburg</span></li>
+									<li><span class="offer-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span>Passionate educators who care</span></li>
+									<li><span class="offer-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span>Proven strategies for exam success</span></li>
+									<li><span class="offer-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span>Clear progress tracking for parents & learners</span></li>
+								</>
+							)}
+						</ul>
+					</div>
+					<div class="about-info">
+						<div class="info-card">
+							<h3>Office Hours</h3>
+							<table class="hours-table">
+								{info.officeHours?.map((hour) => (
+									<tr>
+										<td>{hour.day}</td>
+										<td>{hour.time}</td>
+									</tr>
+								)) || (
+									<>
+										<tr><td>Monday - Thursday</td><td>10h00 - 18h00</td></tr>
+										<tr><td>Friday</td><td>10h00 - 16h00</td></tr>
+										<tr><td>Saturday</td><td>08h00 - 12h00</td></tr>
+									</>
+								)}
+							</table>
+						</div>
+						<div class="info-card">
+							<h3>Visit Us</h3>
+							<p class="address">{info.address || '184 Konig Street, Boksburg South, 1459'}</p>
+							<div class="contact-phones">
+								<a href={`tel:${info.phone1?.replace(/\s/g, '') || '0718224498'}`} class="phone-link">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+										<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+									</svg>
+									{info.phone1 || '071 822 4498'}
+								</a>
+								<a href={`tel:${info.phone2?.replace(/\s/g, '') || '0722537197'}`} class="phone-link">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+										<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+									</svg>
+									{info.phone2 || '072 253 7197'}
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- SUBJECTS -->
+		<section id="subjects" class="subjects">
+			<div class="container">
+				<div class="section-badge">Our Subjects</div>
+				<h2 class="section-title">{subjectsData.title || 'What We Teach'}</h2>
+				<div class="subjects-grid">
+					{subjectsData.subjects?.map((subject) => (
+						<div class={`subject-card ${subject.featured ? 'featured' : ''}`}>
+							{subject.featured && <div class="featured-badge">Most Popular</div>}
+							<div class="subject-icon">
+								<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+									<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+								</svg>
+							</div>
+							<h3>{subject.title}</h3>
+							<p class="grade-range">{subject.gradeRange}</p>
+							<div class="subject-tags">
+								{subject.tags.map((tag) => <span>{tag}</span>)}
+							</div>
+						</div>
+					)) || (
+						<>
+							<div class="subject-card">
+								<div class="subject-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+										<path d="M9 3h6v2H9zm0 16h6v2H9zM4 11h16v2H4z"/><circle cx="12" cy="12" r="3"/>
+									</svg>
+								</div>
+								<h3>Science & Accounting</h3>
+								<p class="grade-range">Grades 10-12</p>
+								<div class="subject-tags">
+									<span>Physical Sciences</span><span>Accounting</span>
+								</div>
+							</div>
+							<div class="subject-card featured">
+								<div class="featured-badge">Most Popular</div>
+								<div class="subject-icon">
+									<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+										<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+									</svg>
+								</div>
+								<h3>Mathematics</h3>
+								<p class="grade-range">Grades 8-12</p>
+								<div class="subject-tags">
+									<span>Core Maths</span><span>Math Lit</span>
+								</div>
+							</div>
+						</>
+					)}
+				</div>
+			</div>
+		</section>
+
+		<!-- PRICING -->
+		<section id="pricing" class="pricing">
+			<div class="container">
+				<div class="section-badge">Pricing</div>
+				<h2 class="section-title">{pricing.title || 'Flexible Price Plan'}</h2>
+				<p class="pricing-intro">{pricing.intro || 'Based on weekly hours ranging from 2 to 6 hours, billed monthly. More hours = better value.'}</p>
+				<div class="pricing-cards">
+					{pricing.pricingCards?.map((card) => (
+						<div class={`pricing-card ${card.featured ? 'featured' : ''}`}>
+							<div class="card-header">
+								<span class="hours-label">{card.hours}</span>
+							</div>
+							<div class="card-body">
+								<div class="rate">R{card.rate}<span class="rate-unit">/hr</span></div>
+								<div class="total">
+									<span class="total-label">Monthly Total</span>
+									<span class="total-amount">R{card.monthlyTotal.toLocaleString()}</span>
+								</div>
+								<div class="monthly-hours">{card.monthlyHours}</div>
+							</div>
+						</div>
+					)) || (
+						<>
+							<div class="pricing-card">
+								<div class="card-header"><span class="hours-label">2 Hours / Week</span></div>
+								<div class="card-body">
+									<div class="rate">R220<span class="rate-unit">/hr</span></div>
+									<div class="total"><span class="total-label">Monthly Total</span><span class="total-amount">R1,760</span></div>
+									<div class="monthly-hours">8 hours / month</div>
+								</div>
+							</div>
+							<div class="pricing-card">
+								<div class="card-header"><span class="hours-label">3 Hours / Week</span></div>
+								<div class="card-body">
+									<div class="rate">R190<span class="rate-unit">/hr</span></div>
+									<div class="total"><span class="total-label">Monthly Total</span><span class="total-amount">R2,280</span></div>
+									<div class="monthly-hours">12 hours / month</div>
+								</div>
+							</div>
+							<div class="pricing-card featured">
+								<div class="card-header"><span class="hours-label">4 Hours / Week</span></div>
+								<div class="card-body">
+									<div class="rate">R160<span class="rate-unit">/hr</span></div>
+									<div class="total"><span class="total-label">Monthly Total</span><span class="total-amount">R2,550</span></div>
+									<div class="monthly-hours">18 hours / month</div>
+								</div>
+							</div>
+							<div class="pricing-card">
+								<div class="card-header"><span class="hours-label">5 Hours / Week</span></div>
+								<div class="card-body">
+									<div class="rate">R130<span class="rate-unit">/hr</span></div>
+									<div class="total"><span class="total-label">Monthly Total</span><span class="total-amount">R2,600</span></div>
+									<div class="monthly-hours">20 hours / month</div>
+								</div>
+							</div>
+							<div class="pricing-card">
+								<div class="card-header"><span class="hours-label">6 Hours / Week</span></div>
+								<div class="card-body">
+									<div class="rate">R110<span class="rate-unit">/hr</span></div>
+									<div class="total"><span class="total-label">Monthly Total</span><span class="total-amount">R2,640</span></div>
+									<div class="monthly-hours">24 hours / month</div>
+								</div>
+							</div>
+						</>
+					)}
+				</div>
+			</div>
+		</section>
+
+		<!-- TAGLINE -->
+		<section class="tagline">
+			<div class="container text-center">
+				<p class="tagline-text">
+					<span class="tagline-word">Let's</span>
+					<span class="tagline-word">tally</span>
+					<span class="tagline-word">up</span>
+					<span class="tagline-word">your</span>
+					<span class="tagline-word">success</span>
+					<span class="tagline-word">.</span>
+				</p>
+			</div>
+		</section>
+
+		<!-- ENROLMENT -->
+		<section id="enrolment" class="enrolment">
+			<div class="container text-center">
+				<div class="enrol-badge">{enrolment.badge || '2026 Enrollment'}</div>
+				<h2 class="enrol-title">{enrolment.title || 'ENROLL NOW'}</h2>
+				<p class="enrol-tagline">{enrolment.tagline || "Let's tally up your success."}</p>
+				<a href="#contact" class="btn btn-accent btn-lg">
+					<span>Secure Your Spot</span>
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<line x1="5" y1="12" x2="19" y2="12"></line>
+						<polyline points="12 5 19 12 12 19"></polyline>
+					</svg>
+				</a>
+			</div>
+		</section>
+
+		<!-- CONTACT FORM -->
+		<section id="contact" class="contact">
+			<div class="container">
+				<div class="section-badge">Get In Touch</div>
+				<h2 class="section-title">{contact.title || 'Contact Us'}</h2>
+				<div class="contact-grid">
+					<div class="contact-info">
+						<p class="contact-intro">{contact.intro || 'Ready to get started? Fill out the form and we\'ll be in touch within 24 hours.'}</p>
+						<address class="address-box">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+								<circle cx="12" cy="10" r="3"></circle>
+							</svg>
+							<span>{contact.address || '184 Konig Street, Boksburg South, 1459'}</span>
+						</address>
+						<div class="contact-phones">
+							<a href={`tel:${contact.phone1?.replace(/\s/g, '') || '0718224498'}`} class="phone-btn">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+								</svg>
+								{contact.phone1 || '071 822 4498'}
+							</a>
+							<a href={`tel:${contact.phone2?.replace(/\s/g, '') || '0722537197'}`} class="phone-btn">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+								</svg>
+								{contact.phone2 || '072 253 7197'}
+							</a>
+						</div>
+						<a href={contact.whatsapp || settings.whatsapp || "https://wa.me/27718224498"} class="btn btn-whatsapp btn-lg">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.067 2.877 1.215 3.076.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+							</svg>
+							Chat on WhatsApp
+						</a>
+					</div>
+					<form class="contact-form" action={contact.formspree || settings.formspree || "https://formspree.io/f/PLACEHOLDER"} method="POST">
+						<div class="form-row">
+							<input type="text" name="name" placeholder="Full Name" required />
+						</div>
+						<div class="form-row two-col">
+							<input type="text" name="grade" placeholder="Grade" required />
+							<input type="text" name="subject" placeholder="Subject" required />
+						</div>
+						<div class="form-row">
+							<input type="email" name="email" placeholder="Email Address" required />
+						</div>
+						<div class="form-row">
+							<input type="tel" name="phone" placeholder="Phone Number" required />
+						</div>
+						<div class="form-row checkbox">
+							<label>
+								<input type="checkbox" name="popia" required />
+								<span class="checkbox-custom"></span>
+								<span>I consent to the processing of my data (POPIA)</span>
+							</label>
+						</div>
+						<button type="submit" class="btn btn-accent btn-block btn-lg">
+							<span>Submit Enquiry</span>
+							<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<line x1="22" y1="2" x2="11" y2="13"></line>
+								<polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+							</svg>
+						</button>
+					</form>
+				</div>
+			</div>
+		</section>
+
+		<!-- FOOTER -->
+		<footer class="footer">
+			<div class="container text-center">
+				<p class="footer-brand">{footer.brand || settings.tagline || 'Tally Up — focus and make it count'}</p>
+				<p class="footer-links">
+					<a href={footer.privacyLink || '/privacy'}>Privacy Policy</a>
+				</p>
+				<p class="footer-copy">© {footer.year || '2025'} TallyUpTutors. All rights reserved.</p>
+			</div>
+		</footer>
+	</main>
+</Layout>
+
+<style>
+	/* ==================== AMBER GLOW BACKGROUND ==================== */
+	.bg-amber-glow {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: -1;
+		background: 
+			radial-gradient(ellipse 80% 50% at 50% 0%, rgba(251, 176, 52, 0.25) 0%, transparent 50%),
+			radial-gradient(ellipse 60% 40% at 20% 100%, rgba(251, 176, 52, 0.15) 0%, transparent 50%),
+			radial-gradient(ellipse 50% 30% at 80% 100%, rgba(251, 176, 52, 0.1) 0%, transparent 50%),
+			linear-gradient(180deg, #fefce8 0%, #fff7ed 50%, #ffedd5 100%);
+	}
+
+	/* ==================== BASE STYLES ==================== */
+	:global(body) {
+		margin: 0;
+		padding: 0;
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		color: #1f2937;
+		line-height: 1.6;
+	}
+
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 1.5rem;
+	}
+
+	/* ==================== HEADER ==================== */
+	.site-header {
+		padding: 1.25rem 0;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: rgba(255, 255, 255, 0.85);
+		backdrop-filter: blur(10px);
+		border-bottom: 1px solid rgba(251, 176, 52, 0.2);
+	}
+
+	.site-header .container {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.logo {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+	}
+
+	.logo-main {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: #0d4d5a;
+		line-height: 1;
+		letter-spacing: -0.5px;
+	}
+
+	.logo-sub {
+		font-size: 0.7rem;
+		color: #fbb034;
+		letter-spacing: 4px;
+		font-weight: 600;
+	}
+
+	.main-nav {
+		display: flex;
+		gap: 2rem;
+	}
+
+	.main-nav a {
+		color: #4b5563;
+		text-decoration: none;
+		font-weight: 500;
+		font-size: 0.9rem;
+		transition: color 0.2s;
+	}
+
+	.main-nav a:hover {
+		color: #fbb034;
+	}
+
+	/* ==================== HERO ==================== */
+	.hero {
+		padding: 5rem 0;
+	}
+
+	.hero-content {
+		max-width: 650px;
+	}
+
+	.hero-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		background: rgba(251, 176, 52, 0.15);
+		padding: 0.5rem 1.25rem;
+		border-radius: 50px;
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: #b45309;
+		margin-bottom: 1.5rem;
+		border: 1px solid rgba(251, 176, 52, 0.3);
+	}
+
+	.badge-dot {
+		width: 8px;
+		height: 8px;
+		background: #fbb034;
+		border-radius: 50%;
+	}
+
+	.hero-title {
+		margin-bottom: 1rem;
+		overflow: hidden;
+	}
+
+	.title-animate {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0;
+	}
+
+	.title-char {
+		display: inline-block;
+		font-size: 4rem;
+		font-weight: 700;
+		color: #0d4d5a;
+		line-height: 1;
+		letter-spacing: -2px;
+		opacity: 0;
+		transform: translateY(100%);
+		animation: slideUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+		animation-delay: var(--delay);
+	}
+
+	@keyframes slideUp {
+		from {
+			opacity: 0;
+			transform: translateY(100%);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.hero-subtitle {
+		font-size: 1.15rem;
+		color: #6b7280;
+		margin-bottom: 1rem;
+	}
+
+	.hero-description {
+		font-size: 1.05rem;
+		color: #374151;
+		line-height: 1.7;
+		margin-bottom: 2rem;
+	}
+
+	.hero-actions {
+		display: flex;
+		gap: 1rem;
+		margin-bottom: 2.5rem;
+	}
+
+	.hero-actions .btn svg {
+		transition: transform 0.3s ease;
+	}
+
+	.hero-actions .btn:hover svg {
+		transform: translateX(4px);
+	}
+
+	.hero-stats {
+		display: flex;
+		gap: 2.5rem;
+	}
+
+	.stat {
+		text-align: left;
+	}
+
+	.stat-value {
+		display: block;
+		font-size: 2rem;
+		font-weight: 700;
+		color: #fbb034;
+		line-height: 1.2;
+	}
+
+	.stat-label {
+		font-size: 0.8rem;
+		color: #9ca3af;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+
+	/* ==================== BUTTONS ==================== */
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 0.875rem 1.75rem;
+		border-radius: 2px;
+		font-weight: 600;
+		font-size: 1rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		border: none;
+		text-decoration: none;
+		font-family: 'Inter', sans-serif;
+	}
+
+	.btn-accent {
+		background: #fbb034;
+		color: #0d4d5a;
+		box-shadow: 2px 2px 0px rgba(251, 176, 52, 0.4);
+	}
+
+	.btn-accent:hover {
+		transform: translateY(-2px);
+		box-shadow: 4px 4px 0px rgba(251, 176, 52, 0.5);
+	}
+
+	.btn-whatsapp {
+		background: #25d366;
+		color: white;
+	}
+
+	.btn-whatsapp:hover {
+		background: #128c7e;
+		transform: translateY(-2px);
+	}
+
+	.btn-lg {
+		padding: 1rem 2.5rem;
+		font-size: 1.1rem;
+	}
+
+	.btn-block {
+		width: 100%;
+	}
+
+	/* PaperCSS Button Overrides */
+	.paper-btn {
+		border-radius: 2px !important;
+		box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1) !important;
+		transition: all 0.2s ease !important;
+	}
+
+	.paper-btn:hover {
+		transform: translateY(-2px) !important;
+		box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.15) !important;
+	}
+
+	.btn-primary.paper-btn {
+		background: #fbb034 !important;
+		color: #0d4d5a !important;
+		border: none !important;
+	}
+
+	.btn-success.paper-btn {
+		background: #4caf50 !important;
+		color: white !important;
+		border: none !important;
+	}
+
+	/* ==================== SECTION BADGES ==================== */
+	.section-badge {
+		display: inline-block;
+		background: rgba(251, 176, 52, 0.15);
+		color: #b45309;
+		padding: 0.5rem 1.25rem;
+		border-radius: 50px;
+		font-size: 0.8rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin-bottom: 1rem;
+		border: 1px solid rgba(251, 176, 52, 0.3);
+	}
+
+	/* ==================== ABOUT ==================== */
+	.about {
+		padding: 5rem 0;
+	}
+
+	.about-grid {
+		display: grid;
+		grid-template-columns: 1.5fr 1fr;
+		gap: 4rem;
+	}
+
+	.about h2 {
+		font-size: 1.75rem;
+		color: #0d4d5a;
+		margin-bottom: 1rem;
+	}
+
+	.about-intro {
+		color: #6b7280;
+		margin-bottom: 2rem;
+		line-height: 1.7;
+	}
+
+	.offer-list {
+		list-style: none;
+		padding: 0;
+	}
+
+	.offer-list li {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 0.875rem 0;
+		border-bottom: 1px solid #e5e7eb;
+		color: #374151;
+	}
+
+	.offer-list li:last-child {
+		border-bottom: none;
+	}
+
+	.offer-icon {
+		width: 28px;
+		height: 28px;
+		background: rgba(251, 176, 52, 0.15);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #fbb034;
+		flex-shrink: 0;
+	}
+
+	/* ==================== INFO CARDS ==================== */
+	.info-card {
+		background: white;
+		padding: 1.5rem;
+		border-radius: 2px;
+		margin-bottom: 1rem;
+		box-shadow: 3px 3px 0px rgba(251, 176, 52, 0.2);
+		border: 1px solid #e5e7eb;
+	}
+
+	.info-card h3 {
+		font-size: 0.9rem;
+		color: #fbb034;
+		margin-bottom: 1rem;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+
+	.hours-table {
+		width: 100%;
+	}
+
+	.hours-table td {
+		padding: 0.5rem 0;
+		font-size: 0.9rem;
+		color: #374151;
+	}
+
+	.hours-table td:last-child {
+		text-align: right;
+		font-weight: 600;
+		color: #0d4d5a;
+	}
+
+	.address {
+		font-size: 0.95rem;
+		color: #374151;
+		line-height: 1.6;
+		margin-bottom: 1rem;
+		font-style: normal;
+	}
+
+	.contact-phones {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.phone-link {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: #374151;
+		text-decoration: none;
+		font-size: 0.9rem;
+		transition: color 0.2s;
+	}
+
+	.phone-link:hover {
+		color: #fbb034;
+	}
+
+	/* ==================== SUBJECTS ==================== */
+	.subjects {
+		padding: 5rem 0;
+		background: rgba(251, 176, 52, 0.05);
+	}
+
+	.section-title {
+		font-size: 1.75rem;
+		color: #0d4d5a;
+		text-align: center;
+		margin-bottom: 2.5rem;
+	}
+
+	.subjects-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 2rem;
+		max-width: 750px;
+		margin: 0 auto;
+	}
+
+	.subject-card {
+		background: white;
+		padding: 2.5rem;
+		text-align: center;
+		border-radius: 2px;
+		border: 1px solid #e5e7eb;
+		box-shadow: 3px 3px 0px rgba(251, 176, 52, 0.15);
+		transition: all 0.3s ease;
+		position: relative;
+	}
+
+	.subject-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 6px 6px 0px rgba(251, 176, 52, 0.25);
+		border-color: #fbb034;
+	}
+
+	.subject-card.featured {
+		border-color: #fbb034;
+		box-shadow: 6px 6px 0px rgba(251, 176, 52, 0.3);
+	}
+
+	.featured-badge {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		background: #fbb034;
+		color: #0d4d5a;
+		padding: 0.35rem 0.75rem;
+		border-radius: 2px;
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	.subject-icon {
+		color: #fbb034;
+		margin-bottom: 1.25rem;
+	}
+
+	.subject-card h3 {
+		font-size: 1.25rem;
+		color: #0d4d5a;
+		margin-bottom: 0.5rem;
+	}
+
+	.grade-range {
+		font-weight: 600;
+		color: #fbb034;
+		margin-bottom: 1.25rem;
+	}
+
+	.subject-tags {
+		display: flex;
+		gap: 0.5rem;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	.subject-tags span {
+		background: rgba(251, 176, 52, 0.1);
+		color: #92400e;
+		padding: 0.35rem 0.75rem;
+		border-radius: 50px;
+		font-size: 0.8rem;
+		font-weight: 500;
+	}
+
+	/* ==================== PRICING ==================== */
+	.pricing {
+		padding: 5rem 0;
+	}
+
+	.pricing-intro {
+		text-align: center;
+		color: #6b7280;
+		margin-bottom: 2rem;
+		max-width: 500px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.pricing-cards {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: 1.5rem;
+		max-width: 1000px;
+		margin: 0 auto;
+	}
+
+	.pricing-card {
+		background: white;
+		border-radius: 2px;
+		border: 1px solid #e5e7eb;
+		box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.08);
+		transition: all 0.3s ease;
+	}
+
+	.pricing-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 6px 6px 0px rgba(251, 176, 52, 0.2);
+	}
+
+	.pricing-card.featured {
+		border-color: #fbb034;
+		box-shadow: 6px 6px 0px rgba(251, 176, 52, 0.3);
+	}
+
+	.pricing-card.featured:hover {
+		box-shadow: 8px 8px 0px rgba(251, 176, 52, 0.4);
+	}
+
+	.card-header {
+		background: rgba(251, 176, 52, 0.1);
+		padding: 1rem;
+		border-radius: 2px 2px 0 0;
+		text-align: center;
+		border-bottom: 1px solid rgba(251, 176, 52, 0.2);
+	}
+
+	.pricing-card:hover {
+		transform: perspective(1000px) rotateY(-5deg) rotateX(5deg) translateY(-10px);
+		box-shadow: 
+			15px 15px 30px rgba(0, 0, 0, 0.12),
+			-5px -5px 20px rgba(251, 176, 52, 0.1);
+		border-color: #fbb034;
+	}
+
+	.pricing-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		border-radius: 16px;
+		background: linear-gradient(135deg, rgba(251, 176, 52, 0.1) 0%, transparent 50%);
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		pointer-events: none;
+	}
+
+	.pricing-card:hover::before {
+		opacity: 1;
+	}
+
+	.pricing-card.featured {
+		border-color: #fbb034;
+		box-shadow: 0 4px 20px rgba(251, 176, 52, 0.25);
+	}
+
+	.pricing-card.featured:hover {
+		box-shadow: 
+			15px 15px 30px rgba(0, 0, 0, 0.15),
+			0 0 40px rgba(251, 176, 52, 0.3);
+	}
+
+	.card-header {
+		background: rgba(251, 176, 52, 0.1);
+		padding: 1rem;
+		border-radius: 16px 16px 0 0;
+		text-align: center;
+		border-bottom: 1px solid rgba(251, 176, 52, 0.2);
+	}
+
+	.hours-label {
+		font-weight: 600;
+		color: #0d4d5a;
+		font-size: 0.95rem;
+	}
+
+	.card-body {
+		padding: 1.5rem 1rem;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.rate {
+		font-size: 1.75rem;
+		font-weight: 700;
+		color: #0d4d5a;
+	}
+
+	.rate-unit {
+		font-size: 0.85rem;
+		font-weight: 400;
+		color: #6b7280;
+	}
+
+	.total {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		margin-top: 0.5rem;
+	}
+
+	.total-label {
+		font-size: 0.75rem;
+		color: #9ca3af;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.total-amount {
+		font-size: 1.35rem;
+		font-weight: 700;
+		color: #fbb034;
+	}
+
+	.monthly-hours {
+		font-size: 0.8rem;
+		color: #9ca3af;
+		padding-top: 0.5rem;
+		border-top: 1px dashed #e5e7eb;
+		margin-top: 0.5rem;
+	}
+
+	/* ==================== TAGLINE ==================== */
+	.tagline {
+		padding: 4rem 0;
+		background: linear-gradient(
+			180deg,
+			rgba(251, 176, 52, 0.12) 0%,
+			rgba(251, 176, 52, 0.08) 50%,
+			rgba(255, 255, 255, 0) 100%
+		);
+	}
+
+	.tagline-text {
+		font-size: 2.5rem;
+		font-family: 'Dancing Script', cursive;
+		color: #0d4d5a;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+
+	.tagline-word {
+		display: inline-block;
+		opacity: 0;
+		transform: translateY(20px) rotate(5deg);
+		animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+	}
+
+	.tagline-word:nth-child(1) { animation-delay: 0s; }
+	.tagline-word:nth-child(2) { animation-delay: 0.1s; }
+	.tagline-word:nth-child(3) { animation-delay: 0.2s; }
+	.tagline-word:nth-child(4) { animation-delay: 0.3s; }
+	.tagline-word:nth-child(5) { animation-delay: 0.4s; }
+	.tagline-word:nth-child(6) { animation-delay: 0.5s; }
+
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(20px) rotate(5deg);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) rotate(0);
+		}
+	}
+
+	/* ==================== ENROLMENT ==================== */
+	.enrolment {
+		padding: 5rem 0;
+		background: linear-gradient(135deg, rgba(251, 176, 52, 0.12) 0%, rgba(251, 176, 52, 0.08) 50%, rgba(255, 255, 255, 0) 100%);
+	}
+
+	.enrol-badge {
+		display: inline-block;
+		background: rgba(251, 176, 52, 0.2);
+		color: #b45309;
+		padding: 0.5rem 1.5rem;
+		border-radius: 2px;
+		font-size: 0.85rem;
+		font-weight: 600;
+		margin-bottom: 1.5rem;
+		border: 1px solid rgba(251, 176, 52, 0.4);
+	}
+
+	.enrol-title {
+		font-size: 2.5rem;
+		font-weight: 700;
+		color: #0d4d5a;
+		margin-bottom: 0.5rem;
+	}
+
+	.enrol-tagline {
+		font-family: 'Dancing Script', cursive;
+		font-size: 1.35rem;
+		color: #fbb034;
+		margin-bottom: 2rem;
+	}
+
+	/* ==================== CONTACT ==================== */
+	.contact {
+		padding: 5rem 0;
+	}
+
+	.contact-intro {
+		color: #6b7280;
+		margin-bottom: 2rem;
+		line-height: 1.7;
+	}
+
+	.contact-grid {
+		display: grid;
+		grid-template-columns: 1fr 1.5fr;
+		gap: 3rem;
+	}
+
+	.address-box {
+		display: flex;
+		align-items: flex-start;
+		gap: 1rem;
+		font-style: normal;
+		font-size: 1rem;
+		color: #374151;
+		line-height: 1.6;
+		margin-bottom: 1.5rem;
+	}
+
+	.address-box svg {
+		color: #fbb034;
+		flex-shrink: 0;
+		margin-top: 0.25rem;
+	}
+
+	.contact-phones {
+		margin-bottom: 1.5rem;
+	}
+
+	.phone-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
+		color: #374151;
+		text-decoration: none;
+		padding: 0.75rem 1.25rem;
+		background: white;
+		border-radius: 8px;
+		margin-right: 0.75rem;
+		margin-bottom: 0.75rem;
+		border: 1px solid #e5e7eb;
+		transition: all 0.2s;
+	}
+
+	.phone-btn:hover {
+		border-color: #fbb034;
+		color: #fbb034;
+	}
+
+	.contact-form {
+		background: white;
+		padding: 2rem;
+		border-radius: 2px;
+		box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.08);
+		border: 1px solid #e5e7eb;
+	}
+
+	.form-row {
+		margin-bottom: 1rem;
+	}
+
+	.form-row.two-col {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+	}
+
+	.form-row input {
+		width: 100%;
+		padding: 0.875rem 1rem;
+		background: #f9fafb;
+		border: 1px solid #d1d5db;
+		border-radius: 2px;
+		font-size: 0.95rem;
+		transition: all 0.2s;
+	}
+
+	.form-row input::placeholder {
+		color: #9ca3af;
+	}
+
+	.form-row input:focus {
+		outline: none;
+		border-color: #fbb034;
+		background: white;
+		box-shadow: 0 0 0 3px rgba(251, 176, 52, 0.15);
+	}
+
+	.form-row.checkbox label {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+		cursor: pointer;
+		font-size: 0.85rem;
+		color: #6b7280;
+	}
+
+	.form-row.checkbox input {
+		display: none;
+	}
+
+	.checkbox-custom {
+		width: 18px;
+		height: 18px;
+		border: 2px solid #d1d5db;
+		border-radius: 2px;
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.2s;
+	}
+
+	.form-row.checkbox input:checked + .checkbox-custom {
+		background: #fbb034;
+		border-color: #fbb034;
+	}
+
+	.form-row.checkbox input:checked + .checkbox-custom::after {
+		content: '✓';
+		color: #0d4d5a;
+		font-size: 11px;
+		font-weight: bold;
+	}
+
+	.form-row.checkbox input {
+		display: none;
+	}
+
+	.checkbox-custom {
+		width: 18px;
+		height: 18px;
+		border: 2px solid #d1d5db;
+		border-radius: 2px;
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.2s;
+	}
+
+	.form-row.checkbox input:checked + .checkbox-custom {
+		background: #fbb034;
+		border-color: #fbb034;
+	}
+
+	.form-row.checkbox input:checked + .checkbox-custom::after {
+		content: '✓';
+		color: #0d4d5a;
+		font-size: 11px;
+		font-weight: bold;
+	}
+
+	.form-row {
+		margin-bottom: 1rem;
+	}
+
+	.form-row.two-col {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+	}
+
+	.form-row input {
+		width: 100%;
+		padding: 0.875rem 1rem;
+		background: #f9fafb;
+		border: 1px solid #e5e7eb;
+		border-radius: 8px;
+		font-size: 0.95rem;
+		transition: all 0.2s;
+	}
+
+	.form-row input::placeholder {
+		color: #9ca3af;
+	}
+
+	.form-row input:focus {
+		outline: none;
+		border-color: #fbb034;
+		background: white;
+	}
+
+	.form-row.checkbox label {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+		cursor: pointer;
+		font-size: 0.85rem;
+		color: #6b7280;
+	}
+
+	.form-row.checkbox input {
+		display: none;
+	}
+
+	.checkbox-custom {
+		width: 18px;
+		height: 18px;
+		border: 2px solid #d1d5db;
+		border-radius: 4px;
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.2s;
+	}
+
+	.form-row.checkbox input:checked + .checkbox-custom {
+		background: #fbb034;
+		border-color: #fbb034;
+	}
+
+	.form-row.checkbox input:checked + .checkbox-custom::after {
+		content: '✓';
+		color: #0d4d5a;
+		font-size: 11px;
+		font-weight: bold;
+	}
+
+	/* ==================== FOOTER ==================== */
+	.footer {
+		padding: 2.5rem 0;
+		background: linear-gradient(135deg, rgba(251, 176, 52, 0.15) 0%, rgba(251, 176, 52, 0.1) 50%, rgba(251, 176, 52, 0.05) 100%);
+		border-top: 1px solid rgba(251, 176, 52, 0.3);
+	}
+
+	.footer-brand {
+		font-size: 1.15rem;
+		font-weight: 600;
+		color: #0d4d5a;
+		margin-bottom: 0.75rem;
+	}
+
+	.footer-links {
+		margin-bottom: 0.75rem;
+	}
+
+	.footer-links a {
+		color: #b45309;
+		text-decoration: none;
+		font-weight: 500;
+	}
+
+	.footer-links a:hover {
+		text-decoration: underline;
+	}
+
+	.footer-copy {
+		font-size: 0.8rem;
+		color: #78716c;
+	}
+
+	/* ==================== RESPONSIVE ==================== */
+	@media (max-width: 992px) {
+		.about-grid,
+		.contact-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.subjects-grid {
+			grid-template-columns: 1fr;
+			max-width: 450px;
+		}
+
+		.pricing-cards {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 768px) {
+		.site-header .container {
+			flex-direction: column;
+			gap: 1rem;
+		}
+
+		.main-nav {
+			gap: 1rem;
+		}
+
+		.title-char {
+			font-size: 2.75rem;
+		}
+
+		.hero-actions {
+			flex-direction: column;
+		}
+
+		.hero-stats {
+			flex-wrap: wrap;
+			gap: 1.5rem;
+		}
+
+		.enrol-title {
+			font-size: 2rem;
+		}
+
+		.tagline-text {
+			font-size: 1.75rem;
+		}
+
+		.form-row.two-col {
+			grid-template-columns: 1fr;
+		}
+
+		.pricing-cards {
+			grid-template-columns: 1fr;
+			max-width: 350px;
+		}
+
+		.pricing-card:hover {
+			transform: perspective(1000px) rotateY(-3deg) rotateX(3deg) translateY(-5px);
+		}
+	}
+
+	/* ==================== PARTICLES CONTAINER ==================== */
+	.particles-container {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+		pointer-events: none;
+	}
+</style>
+
+<!-- Particles.js Initialization -->
+<script is:inline src="/lib/particles.min.js"></script>
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', function() {
+		if (typeof particlesJS !== 'undefined') {
+			particlesJS('particles-amber', {
+				particles: {
+					number: {
+						value: 60,
+						density: {
+							enable: true,
+							value_area: 800
+						}
+					},
+					color: {
+						value: ['#fbb034', '#f59e0b', '#fbbf24', '#ffffff']
+					},
+					shape: {
+						type: 'circle'
+					},
+					opacity: {
+						value: 0.6,
+						random: true,
+						anim: {
+							enable: true,
+							speed: 1,
+							opacity_min: 0.2,
+							sync: false
+						}
+					},
+					size: {
+						value: 4,
+						random: true,
+						anim: {
+							enable: true,
+							speed: 2,
+							size_min: 1,
+							sync: false
+						}
+					},
+					line_linked: {
+						enable: true,
+						distance: 150,
+						color: '#fbb034',
+						opacity: 0.2,
+						width: 1
+					},
+					move: {
+						enable: true,
+						speed: 1.5,
+						direction: 'none',
+						random: false,
+						straight: false,
+						out_mode: 'out',
+						bounce: false,
+						attract: {
+							enable: false
+						}
+					}
+				},
+				interactivity: {
+					detect_on: 'canvas',
+					events: {
+						onhover: {
+							enable: true,
+							mode: 'grab'
+						},
+						onclick: {
+							enable: false
+						},
+						resize: true
+					},
+					modes: {
+						grab: {
+							distance: 140,
+							line_linked: {
+								opacity: 0.5
+							}
+						},
+						bubble: {
+							enable: false
+						},
+						repulse: {
+							enable: false
+						}
+					}
+				},
+				prosessors: false,
+				retina_detect: true
+			});
+		}
+	});
+</script>

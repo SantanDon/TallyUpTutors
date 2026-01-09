@@ -1,0 +1,142 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  # Home Page - Hero Section
+  - name: "hero"
+    label: "Hero Section"
+    folder: "src/content/home"
+    create: false
+    slug: "hero"
+    fields:
+      - {label: "Hero Title", name: "heroTitle", widget: "text", default: "TALLYUP TUTORS"}
+      - {label: "Hero Subtitle", name: "heroSubtitle", widget: "text", default: "Expert Tuition in Mathematics, Science & Accounting"}
+      - {label: "Hero Description", name: "heroDescription", widget: "text"}
+      - {label: "Free Trial Badge", name: "freeTrialBadge", widget: "text", default: "Free Trial Lessons Available"}
+      - label: "Stats"
+        name: "stats"
+        widget: "list"
+        fields:
+          - {label: "Value", name: "value", widget: "text"}
+          - {label: "Label", name: "label", widget: "text"}
+
+  # Home Page - About Section
+  - name: "about"
+    label: "About Section"
+    folder: "src/content/home"
+    create: false
+    slug: "about"
+    fields:
+      - {label: "Section Title", name: "title", widget: "text", default: "What We Offer"}
+      - {label: "Intro", name: "intro", widget: "text"}
+      - label: "Features"
+        name: "features"
+        widget: "list"
+        fields:
+          - {label: "Feature", name: "text", widget: "text"}
+
+  # Home Page - Subjects Section
+  - name: "subjects"
+    label: "Subjects Section"
+    folder: "src/content/home"
+    create: false
+    slug: "subjects"
+    fields:
+      - {label: "Section Title", name: "title", widget: "text", default: "What We Teach"}
+      - label: "Subject Cards"
+        name: "subjects"
+        widget: "list"
+        fields:
+          - {label: "Title", name: "title", widget: "text"}
+          - {label: "Grade Range", name: "gradeRange", widget: "text"}
+          - {label: "Tags (comma separated)", name: "tags", widget: "text"}
+          - {label: "Featured", name: "featured", widget: "boolean", default: false}
+
+  # Home Page - Pricing Section
+  - name: "pricing"
+    label: "Pricing Section"
+    folder: "src/content/home"
+    create: false
+    slug: "pricing"
+    fields:
+      - {label: "Section Title", name: "title", widget: "text", default: "Flexible Price Plan"}
+      - {label: "Intro", name: "intro", widget: "text"}
+      - label: "Pricing Cards"
+        name: "pricingCards"
+        widget: "list"
+        fields:
+          - {label: "Hours per Week", name: "hours", widget: "text"}
+          - {label: "Rate per Hour", name: "rate", widget: "number"}
+          - {label: "Monthly Total", name: "monthlyTotal", widget: "number"}
+          - {label: "Monthly Hours Text", name: "monthlyHours", widget: "text"}
+          - {label: "Featured", name: "featured", widget: "boolean", default: false}
+
+  # Home Page - Contact Section
+  - name: "contact"
+    label: "Contact Section"
+    folder: "src/content/home"
+    create: false
+    slug: "contact"
+    fields:
+      - {label: "Section Title", name: "title", widget: "text", default: "Contact Us"}
+      - {label: "Intro", name: "intro", widget: "text"}
+      - {label: "Address", name: "address", widget: "text"}
+      - {label: "Phone 1", name: "phone1", widget: "text"}
+      - {label: "Phone 2", name: "phone2", widget: "text"}
+      - {label: "WhatsApp Link", name: "whatsapp", widget: "text"}
+      - {label: "Formspree URL", name: "formspree", widget: "text"}
+
+  # Home Page - Info (Office Hours)
+  - name: "info"
+    label: "Office Hours & Info"
+    folder: "src/content/home"
+    create: false
+    slug: "info"
+    fields:
+      - label: "Office Hours"
+        name: "officeHours"
+        widget: "list"
+        fields:
+          - {label: "Day", name: "day", widget: "text"}
+          - {label: "Time", name: "time", widget: "text"}
+      - {label: "Address", name: "address", widget: "text"}
+      - {label: "Phone 1", name: "phone1", widget: "text"}
+      - {label: "Phone 2", name: "phone2", widget: "text"}
+
+  # Home Page - Footer
+  - name: "footer"
+    label: "Footer"
+    folder: "src/content/home"
+    create: false
+    slug: "footer"
+    fields:
+      - {label: "Brand Text", name: "brand", widget: "text", default: "Tally Up — focus and make it count"}
+      - {label: "Year", name: "year", widget: "text", default: "2025"}
+      - {label: "Privacy Link", name: "privacyLink", widget: "text", default: "/privacy"}
+
+  # Home Page - Enrolment
+  - name: "enrolment"
+    label: "Enrolment Section"
+    folder: "src/content/home"
+    create: false
+    slug: "enrolment"
+    fields:
+      - {label: "Badge", name: "badge", widget: "text", default: "2026 Enrollment"}
+      - {label: "Title", name: "title", widget: "text", default: "ENROLL NOW"}
+      - {label: "Tagline", name: "tagline", widget: "text", default: "Let's tally up your success."}
+
+  # Site Settings
+  - name: "settings"
+    label: "Site Settings"
+    folder: "src/content/settings"
+    create: false
+    slug: "site"
+    fields:
+      - {label: "Site Name", name: "siteName", widget: "text", default: "TallyUpTutors"}
+      - {label: "Tagline", name: "tagline", widget: "text", default: "focus and make it count"}
+      - {label: "WhatsApp Link", name: "whatsapp", widget: "text", default: "https://wa.me/27718224498"}
+      - {label: "Formspree URL", name: "formspree", widget: "text"}

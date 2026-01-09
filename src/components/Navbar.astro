@@ -1,0 +1,145 @@
+---
+---
+
+<nav class="navbar">
+	<div class="container navbar-container">
+		<a href="#hero" class="logo">TallyUp<span class="text-accent">Tutors</span></a>
+		
+		<div class="nav-content">
+			<ul class="nav-links">
+				<li><a href="#hero">Home</a></li>
+				<li><a href="#subjects">Subjects</a></li>
+				<li><a href="#offer">Pricing</a></li>
+				<li><a href="#contact">Contact</a></li>
+			</ul>
+
+			<div class="nav-actions">
+				<button id="theme-toggle" class="btn-theme" aria-label="Toggle Theme">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+				</button>
+				<a href="#contact" class="btn btn-primary">Enroll Now</a>
+			</div>
+		</div>
+	</div>
+</nav>
+
+<style>
+	.navbar {
+		position: fixed;
+		top: 1.5rem;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 90%;
+		max-width: 1200px;
+		background: var(--glass-bg);
+		backdrop-filter: var(--glass-blur);
+		-webkit-backdrop-filter: var(--glass-blur);
+		border: 1px solid var(--glass-border);
+		border-radius: 100px;
+		z-index: 1000;
+		padding: 0.75rem 1.5rem;
+		transition: all 0.3s ease;
+	}
+
+	.navbar-container {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 !important;
+	}
+
+	.logo {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: var(--color-primary);
+		text-decoration: none;
+		letter-spacing: -1px;
+	}
+
+	.nav-content {
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+	}
+
+	.nav-links {
+		display: flex;
+		list-style: none;
+		gap: 2rem;
+		margin: 0;
+		padding: 0;
+	}
+
+	.nav-links a {
+		text-decoration: none;
+		color: var(--color-text);
+		font-weight: 500;
+		font-size: 0.95rem;
+		transition: color 0.2s ease;
+	}
+
+	.nav-links a:hover {
+		color: var(--color-accent);
+	}
+
+	.nav-actions {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+	}
+
+	.btn-theme {
+		background: none;
+		border: none;
+		color: var(--color-text);
+		cursor: pointer;
+		padding: 0.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.2s ease;
+		border-radius: 50%;
+	}
+
+	.btn-theme:hover {
+		background: rgba(0,0,0,0.05);
+		transform: scale(1.1);
+	}
+
+	[data-theme="dark"] .btn-theme:hover {
+		background: rgba(255,255,255,0.1);
+	}
+
+	@media (max-width: 768px) {
+		.nav-links { display: none; }
+	}
+</style>
+
+<script>
+	const themeToggle = document.getElementById('theme-toggle');
+	const iconSun = themeToggle.querySelector('.icon-sun');
+	const iconMoon = themeToggle.querySelector('.icon-moon');
+
+	// Set initial theme
+	const currentTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+	document.documentElement.setAttribute('data-theme', currentTheme);
+	updateIcons(currentTheme);
+
+	themeToggle.addEventListener('click', () => {
+		const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+		document.documentElement.setAttribute('data-theme', newTheme);
+		localStorage.setItem('theme', newTheme);
+		updateIcons(newTheme);
+	});
+
+	function updateIcons(theme) {
+		if (theme === 'dark') {
+			iconSun.style.display = 'none';
+			iconMoon.style.display = 'block';
+		} else {
+			iconSun.style.display = 'block';
+			iconMoon.style.display = 'none';
+		}
+	}
+</script>

@@ -1,0 +1,150 @@
+---
+interface Props {
+  direction?: 'up' | 'down' | 'left' | 'right' | 'diagonal';
+  speed?: number;
+  borderColor?: string;
+  hoverFillColor?: string;
+  squareSize?: number;
+}
+
+const {
+  direction = 'up',
+  speed = 0.5,
+  borderColor = '#e5e7eb',
+  hoverFillColor = 'rgba(13, 77, 90, 0.05)',
+  squareSize = 40,
+} = Astro.props;
+---
+
+<div class="squares-container">
+  <canvas 
+    id="squares-canvas" 
+    data-direction={direction} 
+    data-speed={speed} 
+    data-border-color={borderColor} 
+    data-hover-fill-color={hoverFillColor} 
+    data-square-size={squareSize}
+  ></canvas>
+</div>
+
+<style>
+  .squares-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none; /* Allow interaction with content above */
+  }
+  
+  #squares-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: auto; /* Re-enable for hover effect if needed, but usually background shouldn't block */
+  }
+</style>
+
+<script>
+  class Squares {
+    constructor(canvasId) {
+      this.canvas = document.getElementById(canvasId);
+      if (!this.canvas) return;
+      this.ctx = this.canvas.getContext('2d');
+      
+      this.direction = this.canvas.dataset.direction;
+      this.speed = parseFloat(this.canvas.dataset.speed);
+      this.borderColor = this.canvas.dataset.borderColor;
+      this.hoverFillColor = this.canvas.dataset.hoverFillColor;
+      this.squareSize = parseInt(this.canvas.dataset.squareSize);
+      
+      this.gridOffset = { x: 0, y: 0 };
+      this.hoveredSquare = null;
+      
+      this.init();
+    }
+    
+    init() {
+      this.resize();
+      window.addEventListener('resize', () => this.resize());
+      
+      // Mouse tracking for hover effect
+      window.addEventListener('mousemove', (e) => {
+        const rect = this.canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const col = Math.floor((x - (this.gridOffset.x % this.squareSize)) / this.squareSize);
+        const row = Math.floor((y - (this.gridOffset.y % this.squareSize)) / this.squareSize);
+        
+        this.hoveredSquare = { col, row };
+      });
+      
+      this.animate();
+    }
+    
+    resize() {
+      this.canvas.width = this.canvas.parentElement.offsetWidth;
+      this.canvas.height = this.canvas.parentElement.offsetHeight;
+    }
+    
+    animate() {
+      // Update offset
+      switch(this.direction) {
+        case 'up': this.gridOffset.y -= this.speed; break;
+        case 'down': this.gridOffset.y += this.speed; break;
+        case 'left': this.gridOffset.x -= this.speed; break;
+        case 'right': this.gridOffset.x += this.speed; break;
+        case 'diagonal': 
+          this.gridOffset.x -= this.speed; 
+          this.gridOffset.y -= this.speed; 
+          break;
+      }
+      
+      this.draw();
+      requestAnimationFrame(() => this.animate());
+    }
+    
+    draw() {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      
+      const startX = Math.floor(this.gridOffset.x % this.squareSize) - this.squareSize;
+      const startY = Math.floor(this.gridOffset.y % this.squareSize) - this.squareSize;
+      
+      this.ctx.strokeStyle = this.borderColor;
+      this.ctx.lineWidth = 0.5;
+      
+      for (let x = startX; x < this.canvas.width + this.squareSize; x += this.squareSize) {
+        for (let y = startY; y < this.canvas.height + this.squareSize; y += this.squareSize) {
+          this.ctx.strokeRect(x, y, this.squareSize, this.squareSize);
+          
+          // Hover effect
+          const col = Math.floor((x - startX) / this.squareSize);
+          const row = Math.floor((y - startY) / this.squareSize);
+          
+          if (this.hoveredSquare && this.hoveredSquare.col === col && this.hoveredSquare.row === row) {
+            this.ctx.fillStyle = this.hoverFillColor;
+            this.ctx.fillRect(x, y, this.squareSize, this.squareSize);
+          }
+        }
+      }
+      
+      // Radial gradient mask for subtle edges
+      const gradient = this.ctx.createRadialGradient(
+        this.canvas.width / 2, this.canvas.height / 2, 0,
+        this.canvas.width / 2, this.canvas.height / 2, Math.sqrt(Math.pow(this.canvas.width, 2) + Math.pow(this.canvas.height, 2)) / 2
+      );
+      gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+      gradient.addColorStop(1, 'rgba(255, 255, 255, 1)');
+      
+      this.ctx.fillStyle = gradient;
+      // Note: This mask approach is basic. React Bits uses a more complex shader or multiple draw calls.
+      // For now, this provides a nice clean fade to the background color.
+    }
+  }
+
+  // Initialize
+  new Squares('squares-canvas');
+</script>
