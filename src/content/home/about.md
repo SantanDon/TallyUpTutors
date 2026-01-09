@@ -8,6 +8,8 @@ features:
   - "Passionate educators who care"
   - "Proven strategies for exam success"
   - "Clear progress tracking for parents & learners"
+  - "Fast & reliable hosting"
+  - "Fast support response"
 ---
 
 # About Section
